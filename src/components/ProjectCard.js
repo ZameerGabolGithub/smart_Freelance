@@ -103,15 +103,13 @@ import { useBidding } from '../hooks/useBidding';
 import bidService from '../services/bidService';
 import { isProjectNew } from '../utils/apiUtils';
 import ProposalModal from './ProposalModal';
-import { useModal } from '../contexts/ModalContext';
 /**
  * ProjectCard component - renders a single project in a card format
  */
 const ProjectCard = ({ project }) => {
   const { loading, error, success, placeBid, clearError } = useBidding();
   const [showBidForm, setShowBidForm] = useState(false);
-const [isModalOpen,setIsModalOpen] = useState(false);
-const {openModal} = useModal();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   // Extract project data with fallbacks based on the actual API response structure
   const {
     id = 'N/A',
@@ -165,20 +163,13 @@ const {openModal} = useModal();
   const hasAlreadyBid = bidService.hasBidOnProject(id);
 
     // Handle opening bid modal
-    const handleOpenBid = () => {
-      if (hasAlreadyBid) {
-        alert('You have already placed a bid on this project.');
-        return;
-      }
-      
-      openModal('proposal', {
-        projectId: id,
-        projectTitle: title,
-        budgetDisplay: budgetDisplay,
-        initialAmount: budgetMin || 250,
-        initialPeriod: 5
-      });
-    };
+  const handleOpenBid = () => {
+    if (hasAlreadyBid) {
+      alert('You have already placed a bid on this project.');
+      return;
+    }
+    setIsModalOpen(true);
+  };
   
     // Handle bid submission from modal
     const handleSubmitBid = async ({ amount, period, description }) => {

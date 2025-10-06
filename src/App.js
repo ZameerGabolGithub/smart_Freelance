@@ -1,22 +1,228 @@
-import React, { useEffect } from 'react';
+// import React, { useState, useEffect } from 'react';
+// import ErrorBoundary from './components/ErrorBoundary';
+// import FetchButton from './components/FetchButton';
+// import ProjectList from './components/ProjectList';
+// import AuthBanner from './components/AuthBanner';
+// import UserSwitcher from './components/UserSwitcher';
+// import AuthError from './components/AuthError';
+// import LoginForm from './components/LoginForm';
+// import RegisterForm from './components/RegisterForm';
+// import { useFreelancerAPI } from './hooks/useFreelancerAPI';
+// import { useModal } from './contexts/ModalContext';
+// import { useBidding } from './hooks/useBidding';
+// import { useAuth } from './contexts/AuthContext';
+// import ProposalModal from './components/ProposalModal';
+
+// /**
+//  * Protected App Component - Your existing functionality
+//  */
+// const MainApp = () => {
+//   const { user, logout } = useAuth();
+  
+//   // Your existing app logic stays exactly the same
+//   const {
+//     projects,
+//     loading,
+//     error,
+//     fetchRecentProjects,
+//     loadProjectsFromStorage,
+//     clearError,
+//     retryFetch,
+//     lastFetchTime,
+//     newCount,
+//     oldCount
+//   } = useFreelancerAPI();
+
+//   const { modalState, closeModal } = useModal();
+//   const { placeBid } = useBidding();
+
+//   // Load projects from storage on component mount - SAME AS BEFORE
+//   useEffect(() => {
+//     loadProjectsFromStorage();
+//   }, [loadProjectsFromStorage]);
+
+//   // Handle fetch projects - SAME AS BEFORE
+//   const handleFetchProjects = async () => {
+//     try {
+//       clearError();
+//       await fetchRecentProjects();
+//     } catch (err) {
+//       console.error('Failed to fetch projects:', err.message);
+//     }
+//   };
+
+//   // Handle retry - SAME AS BEFORE
+//   const handleRetry = async () => {
+//     try {
+//       await retryFetch();
+//     } catch (err) {
+//       console.error('Retry failed:', err.message);
+//     }
+//   };
+
+//   // Handle bid submission from modal - SAME AS BEFORE
+//   const handleSubmitBid = async ({ amount, period, description }) => {
+//     const { projectId } = modalState.data;
+//     const result = await placeBid(projectId, amount, period, description);
+    
+//     if (result?.success) {
+//       console.log('Bid response:', result.data);
+//       alert('Bid placed successfully!');
+//       closeModal();
+//     } else if (result?.message) {
+//       throw new Error(result.message);
+//     } else {
+//       throw new Error('Failed to place bid');
+//     }
+//   };
+
+//   // Your EXACT SAME JSX with just a small header change
+//   return (
+//     <div className="App">
+//       {/* New: Small header with user info and logout */}
+//       <header className="app-header" style={{ 
+//         display: 'flex', 
+//         justifyContent: 'space-between', 
+//         alignItems: 'center', 
+//         padding: '10px 20px', 
+//         background: '#f5f5f5', 
+//         borderBottom: '1px solid #ddd' 
+//       }}>
+//         <h1>🤖 Freelancer AutoBidder</h1>
+//         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+//           <span>Welcome, {user?.name || user?.email}!</span>
+//           <button 
+//             onClick={logout}
+//             style={{
+//               background: '#dc3545',
+//               color: 'white',
+//               border: 'none',
+//               padding: '5px 10px',
+//               borderRadius: '4px',
+//               cursor: 'pointer'
+//             }}
+//           >
+//             Logout
+//           </button>
+//         </div>
+//       </header>
+
+//       {/* ALL YOUR EXISTING COMPONENTS - UNCHANGED */}
+//       <AuthBanner />
+//       <UserSwitcher />
+//       <AuthError />
+      
+//       <div className="main-content">
+//         <h2>Recent Projects Dashboard</h2>
+        
+//         {/* Your existing Fetch Button */}
+//         <FetchButton
+//           onFetch={handleFetchProjects}
+//           loading={loading}
+//           error={error}
+//           onRetry={handleRetry}
+//           lastFetchTime={lastFetchTime}
+//         />
+        
+//         {/* Your existing Project List */}
+//         <ProjectList 
+//           projects={projects} 
+//           newCount={newCount} 
+//           oldCount={oldCount} 
+//         />
+//       </div>
+
+//       {/* Your existing Proposal Modal */}
+//       {modalState.isOpen && modalState.type === 'proposal' && (
+//         <ProposalModal
+//           isOpen={modalState.isOpen}
+//           onClose={closeModal}
+//           onSubmit={handleSubmitBid}
+//           projectData={modalState.data}
+//         />
+//       )}
+//     </div>
+//   );
+// };
+
+// /**
+//  * Auth Gate Component
+//  */
+// const AuthGate = () => {
+//   const [authMode, setAuthMode] = useState('login');
+  
+//   return (
+//     <div style={{ 
+//       minHeight: '100vh', 
+//       display: 'flex', 
+//       alignItems: 'center', 
+//       justifyContent: 'center',
+//       background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' 
+//     }}>
+//       {authMode === 'login' ? (
+//         <LoginForm onSwitchToRegister={() => setAuthMode('register')} />
+//       ) : (
+//         <RegisterForm onSwitchToLogin={() => setAuthMode('login')} />
+//       )}
+//     </div>
+//   );
+// };
+
+// /**
+//  * Main App with Firebase Auth Gate
+//  */
+// function App() {
+//   const { user, loading } = useAuth();
+
+//   // Show loading during auth check
+//   if (loading) {
+//     return (
+//       <div style={{ 
+//         display: 'flex', 
+//         justifyContent: 'center', 
+//         alignItems: 'center', 
+//         height: '100vh' 
+//       }}>
+//         <div>Loading...</div>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <ErrorBoundary>
+//       {user ? <MainApp /> : <AuthGate />}
+//     </ErrorBoundary>
+//   );
+// }
+
+// export default App;
+
+import React, { useState, useEffect } from 'react';
 import ErrorBoundary from './components/ErrorBoundary';
 import FetchButton from './components/FetchButton';
 import ProjectList from './components/ProjectList';
-import AuthBanner from './components/AuthBanner';
-import UserSwitcher from './components/UserSwitcher';
-import AuthError from './components/AuthError';
+// Remove these imports that are causing issues:
+// import AuthBanner from './components/AuthBanner';
+// import UserSwitcher from './components/UserSwitcher';
+// import AuthError from './components/AuthError';
+import LoginForm from './components/LoginForm';
+import RegisterForm from './components/RegisterForm';
 import { useFreelancerAPI } from './hooks/useFreelancerAPI';
 import { useModal } from './contexts/ModalContext';
-import { useBidding } from './hooks/useBidding';
+import { useBidding } from './hooks/useBidding'; 
 import { useAuth } from './contexts/AuthContext';
+import { useFirebaseAuth } from './contexts/FirebaseAuthContext';
 import ProposalModal from './components/ProposalModal';
 
-
 /**
- * Main App component
+ * Protected App Component - Your existing functionality
  */
-function App() {
-  const { isLoading: authLoading, error: authError } = useAuth();
+const MainApp = () => {
+  // Firebase authenticated user
+  const { user: fbUser, logout } = useFirebaseAuth();
+  // Multi-account token switching (Freelancer API credentials)
+  const { currentUser, availableUsers, switchUser } = useAuth();
+  
   const {
     projects,
     loading,
@@ -30,30 +236,22 @@ function App() {
     oldCount
   } = useFreelancerAPI();
 
-
-  const evnn = process.env.REACT_APP_TOKEN;
-  console.log("apdsds",evnn)
-
   const { modalState, closeModal } = useModal();
   const { placeBid } = useBidding();
 
-  // Load projects from storage on component mount
   useEffect(() => {
     loadProjectsFromStorage();
   }, [loadProjectsFromStorage]);
 
-  // Handle fetch projects
   const handleFetchProjects = async () => {
     try {
       clearError();
       await fetchRecentProjects();
     } catch (err) {
-      // Error is already handled in the hook
       console.error('Failed to fetch projects:', err.message);
     }
   };
 
-  // Handle retry
   const handleRetry = async () => {
     try {
       await retryFetch();
@@ -61,102 +259,182 @@ function App() {
       console.error('Retry failed:', err.message);
     }
   };
-  
-    // Handle bid submission from modal
-    const handleSubmitBid = async ({ amount, period, description }) => {
-      const { projectId } = modalState.data;
-      const result = await placeBid(projectId, amount, period, description);
-      if (result?.success) {
-        console.log('Bid response:', result.data);
-        alert('Bid placed successfully!');
-        closeModal();
-      } else if (result?.message) {
-        throw new Error(result.message);
-      } else {
-        throw new Error('Failed to place bid');
-      }
-    };
-  
-  // Show auth error if there's an authentication issue
-  if (authError) {
-    return <AuthError />;
-  }
 
-  // Show loading state while auth is being determined
-  if (authLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading authentication...</p>
+  const handleSubmitBid = async ({ amount, period, description }) => {
+    const { projectId } = modalState.data;
+    const result = await placeBid(projectId, amount, period, description);
+    
+    if (result?.success) {
+      console.log('Bid response:', result.data);
+      alert('Bid placed successfully!');
+      closeModal();
+    } else if (result?.message) {
+      throw new Error(result.message);
+    } else {
+      throw new Error('Failed to place bid');
+    }
+  };
+
+  return (
+    <div className="App">
+      {/* Simple header with user info and logout */}
+      <header className="app-header" style={{ 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+        padding: '10px 20px', 
+        background: '#f8f9fa', 
+        borderBottom: '1px solid #dee2e6',
+        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+      }}>
+        <h1 style={{ margin: 0, color: '#495057' }}>🤖 Freelancer AutoBidder</h1>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+          <span style={{ color: '#6c757d' }}>
+            Welcome, <strong>{fbUser?.displayName || fbUser?.email}</strong>!
+          </span>
+          {/* Account switcher */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <label htmlFor="accountSwitcher" style={{ fontSize: '12px', color: '#6c757d' }}>Account:</label>
+            <select
+              id="accountSwitcher"
+              value={currentUser || 'DEFAULT'}
+              onChange={(e) => switchUser(e.target.value)}
+              style={{
+                padding: '6px 8px',
+                borderRadius: '4px',
+                border: '1px solid #ced4da',
+                background: 'white',
+                color: '#495057',
+                fontSize: '13px'
+              }}
+            >
+              {/* Default option */}
+              <option value="DEFAULT">Default</option>
+              {availableUsers && Object.entries(availableUsers)
+                .filter(([key]) => key !== 'DEFAULT')
+                .map(([key, info]) => (
+                  <option key={key} value={key}>{info?.name || key}</option>
+                ))}
+            </select>
+          </div>
+          <button 
+            onClick={logout}
+            style={{
+              background: '#dc3545',
+              color: 'white',
+              border: 'none',
+              padding: '8px 16px',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontSize: '14px'
+            }}
+          >
+            Logout
+          </button>
         </div>
+      </header>
+
+      {/* Your existing content */}
+      <div className="main-content" style={{ padding: '20px' }}>
+        <div style={{ marginBottom: '20px' }}>
+          <h2 style={{ color: '#495057', marginBottom: '10px' }}>Recent Projects Dashboard</h2>
+          {projects.length > 0 && (
+            <div style={{ color: '#6c757d', fontSize: '14px' }}>
+              📊 {projects.length} projects loaded
+              {newCount > 0 && (
+                <span style={{ 
+                  marginLeft: '10px', 
+                  color: '#28a745', 
+                  fontWeight: 'bold' 
+                }}>
+                  ✨ {newCount} new
+                </span>
+              )}
+            </div>
+          )}
+        </div>
+        
+        <FetchButton
+          onFetch={handleFetchProjects}
+          loading={loading}
+          error={error}
+          onRetry={handleRetry}
+          lastFetchTime={lastFetchTime}
+        />
+        
+        <ProjectList 
+          projects={projects} 
+          newCount={newCount} 
+          oldCount={oldCount} 
+        />
+      </div>
+
+      {modalState.isOpen && modalState.type === 'proposal' && (
+        <ProposalModal
+          isOpen={modalState.isOpen}
+          onClose={closeModal}
+          onSubmit={handleSubmitBid}
+          projectData={modalState.data}
+        />
+      )}
+    </div>
+  );
+};
+
+/**
+ * Auth Gate Component
+ */
+const AuthGate = () => {
+  const [authMode, setAuthMode] = useState('login');
+  
+  return (
+    <div style={{ 
+      minHeight: '100vh', 
+      display: 'flex', 
+      alignItems: 'center', 
+      justifyContent: 'center',
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' 
+    }}>
+      {authMode === 'login' ? (
+        <LoginForm onSwitchToRegister={() => setAuthMode('register')} />
+      ) : (
+        <RegisterForm onSwitchToLogin={() => setAuthMode('login')} />
+      )}
+    </div>
+  );
+};
+
+/**
+ * Main App with Firebase Auth Gate
+ */
+function App() {
+  // Gate on Firebase auth; keep token switching in AuthContext separate
+  const { user: fbUser, loading: fbLoading } = useFirebaseAuth();
+
+  if (fbLoading) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        flexDirection: 'column',
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '100vh',
+        background: '#f8f9fa'
+      }}>
+        <div style={{ 
+          fontSize: '24px', 
+          marginBottom: '10px' 
+        }}>🤖</div>
+        <div style={{ color: '#6c757d' }}>Loading...</div>
       </div>
     );
   }
 
   return (
     <ErrorBoundary>
-      <div className="min-h-screen bg-gray-50">
-        {/* Security Warning Banner */}
-        <AuthBanner />
-        
-        {/* Header */}
-        <header className="bg-white shadow-sm border-b border-gray-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <div className="flex justify-between items-center">
-              <div className="text-center flex-1">
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                  Smart Freelance
-                </h1>
-              </div>
-              <div className="flex items-center space-x-4">
-                <UserSwitcher />
-              </div>
-            </div>
-          </div>
-        </header>
-  
-          {/* Main content */}
-          <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            {/* Fetch section */}
-            <div className="mb-12">
-              <FetchButton
-                onFetch={handleFetchProjects}
-                loading={loading}
-                error={error}
-                onRetry={handleRetry}
-              />
-            </div>
-  
-            {/* Projects section */}
-            <div className="mb-8">
-              <ProjectList
-                projects={projects}
-                loading={loading}
-                error={error}
-                lastFetchTime={lastFetchTime}
-                newCount={newCount}
-                oldCount={oldCount}
-              />
-            </div>
-          </main>
-  
-          {/* Global Proposal Modal */}
-          {modalState.isOpen && modalState.type === 'proposal' && (
-            <ProposalModal
-              open={modalState.isOpen}
-              onClose={closeModal}
-              onSubmit={handleSubmitBid}
-              projectId={modalState.data?.projectId}
-              projectTitle={modalState.data?.projectTitle}
-              budgetDisplay={modalState.data?.budgetDisplay}
-              initialAmount={modalState.data?.initialAmount || 250}
-              initialPeriod={modalState.data?.initialPeriod || 5}
-            />
-          )}
-        </div>
-      </ErrorBoundary>
-    );
-  }
-  
-  export default App;
+      {fbUser ? <MainApp /> : <AuthGate />}
+    </ErrorBoundary>
+  );
+}
+
+export default App;

@@ -2,7 +2,8 @@ import React from 'react';
 import { useAuth } from '../contexts/AuthContext';
 
 const AuthError = () => {
-  const { error, availableUsers, loadAuthConfig } = useAuth();
+  const { error, availableUsers, loadAuthConfig, switchUser } = useAuth();
+  const colorClass = { blue: 'bg-blue-500', green: 'bg-green-500', purple: 'bg-purple-500', gray: 'bg-gray-500' };
 
   if (!error) return null;
 
@@ -24,38 +25,40 @@ const AuthError = () => {
         {/* Available users */}
         <div className="mb-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-3">Available Accounts</h3>
-          <div className="space-y-2">
-            <div className="flex items-center justify-center space-x-2">
-              <div className="w-2 h-2 rounded-full bg-gray-500"></div>
-              <span className="text-sm text-gray-600">Default</span>
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {/* Default account */}
+            <button
+              onClick={() => switchUser('DEFAULT')}
+              className="w-full px-4 py-2 border border-gray-200 rounded-lg flex items-center justify-between hover:bg-gray-50"
+            >
+              <span className="flex items-center space-x-2">
+                <span className="w-2 h-2 rounded-full bg-gray-500"></span>
+                <span className="text-sm text-gray-700">Default</span>
+              </span>
+              <span className="text-xs text-gray-500">Select</span>
+            </button>
+
+            {/* Configured users */}
             {Object.entries(availableUsers).map(([userKey, userInfo]) => (
-              <div key={userKey} className="flex items-center justify-center space-x-2">
-                <div className={`w-2 h-2 rounded-full bg-${userInfo.color}-500`}></div>
-                <span className="text-sm text-gray-600">{userInfo.name}</span>
-              </div>
+              <button
+                key={userKey}
+                onClick={() => switchUser(userKey)}
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg flex items-center justify-between hover:bg-gray-50"
+              >
+                <span className="flex items-center space-x-2">
+                  <span className={`w-2 h-2 rounded-full ${colorClass[userInfo.color] || 'bg-gray-500'}`}></span>
+                  <span className="text-sm text-gray-700">{userInfo.name}</span>
+                </span>
+                <span className="text-xs text-gray-500">Select</span>
+              </button>
             ))}
           </div>
         </div>
 
-        {/* Usage instructions */}
-        {/* <div className="bg-gray-50 rounded-lg p-4 mb-6 text-left">
-          <h4 className="font-medium text-gray-900 mb-2">How to use:</h4>
-          <ul className="text-sm text-gray-600 space-y-1">
-            <li>• Add <code className="bg-gray-200 px-1 rounded">?user=ALICE</code> to URL</li>
-            <li>• Or use route <code className="bg-gray-200 px-1 rounded">/u/ALICE</code></li>
-            <li>• Configure tokens in .env as <code className="bg-gray-200 px-1 rounded">VITE_TOKEN_ALICE</code></li>
-          </ul>
-        </div> */}
 
         {/* Action buttons */}
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <button
-            onClick={loadAuthConfig}
-            className="btn-primary"
-          >
-            Try Again
-          </button>
+          <button onClick={loadAuthConfig} className="btn-primary">Try Again</button>
           <button
             onClick={() => window.location.href = '/'}
             className="btn-secondary"

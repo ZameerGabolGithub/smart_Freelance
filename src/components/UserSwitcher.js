@@ -4,6 +4,8 @@ import { useAuth } from '../contexts/AuthContext';
 const UserSwitcher = () => {
   const { currentUser, switchUser, availableUsers, isLoading } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const colorClass = { blue: 'bg-blue-500', green: 'bg-green-500', purple: 'bg-purple-500', gray: 'bg-gray-500' };
+  
 
   const handleUserSelect = (userKey) => {
     switchUser(userKey);
@@ -74,7 +76,8 @@ const UserSwitcher = () => {
                     currentUser === userKey ? 'bg-blue-50 text-blue-700' : 'text-gray-700'
                   }`}
                 >
-                  <div className={`w-2 h-2 rounded-full bg-${userInfo.color}-500`}></div>
+      
+ <div className={`w-2 h-2 rounded-full ${colorClass[userInfo.color] || 'bg-gray-500'}`}></div>
                   <span>{userInfo.name}</span>
                 </button>
               ))}

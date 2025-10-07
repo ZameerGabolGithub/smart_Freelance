@@ -102,30 +102,58 @@ export const PROPOSAL_STORAGE_PREFIX = 'proposal_draft_';
  * Get environment variables (DEPRECATED - use useAuth hook instead)
  * @deprecated Use useAuth hook from AuthContext for multi-account support
  */
+// export const getEnvConfig = () => {
+//   console.warn('getEnvConfig is deprecated. Use useAuth hook for multi-account support.');
+  
+//   // Support new token name (primary) and fallback to old one if present
+//   const authToken =
+//     process.env.REACT_APP_FREELANCER_TOKEN ||
+//     process.env.REACT_APP_FREELANCER_AUTH_TOKEN;
+//   const bidderId = process.env.REACT_APP_BIDDER_ID;
+  
+//   if (!authToken || !bidderId) {
+//     console.warn('Missing environment variables. Please check .env.local file.');
+//   }
+  
+//   return {
+//     authToken,
+//     bidderId: bidderId ? parseInt(bidderId, 10) : null
+//   };
+// };
+/**
+ * Get environment configuration for the current user
+ * This should work with your AuthContext to get the current user's token
+ */
 export const getEnvConfig = () => {
-  console.warn('getEnvConfig is deprecated. Use useAuth hook for multi-account support.');
+  // Try to get token from localStorage (set by AuthContext)
+  const storedToken = localStorage.getItem('freelancer_token');
+  const storedBidderId = localStorage.getItem('freelancer_bidder_id');
   
-  // Support new token name (primary) and fallback to old one if present
-  const authToken =
-    process.env.REACT_APP_FREELANCER_TOKEN ||
-    process.env.REACT_APP_FREELANCER_AUTH_TOKEN;
-  const bidderId = process.env.REACT_APP_BIDDER_ID;
-  
-  if (!authToken || !bidderId) {
-    console.warn('Missing environment variables. Please check .env.local file.');
+  if (storedToken && storedBidderId) {
+    console.log(`🔍 getEnvConfig: Using stored credentials`);
+    return {
+      token: storedToken,
+      authToken: storedToken, // For backward compatibility
+      bidderId: parseInt(storedBidderId, 10)
+    };
   }
   
+  // Fallback to default environment variables
+  console.log(`🔍 getEnvConfig: Using default environment variables`);
   return {
-    authToken,
-    bidderId: bidderId ? parseInt(bidderId, 10) : null
+    token: process.env.REACT_APP_DEFAULT_TOKEN,
+    authToken: process.env.REACT_APP_DEFAULT_TOKEN,
+    bidderId: process.env.REACT_APP_DEFAULT_BIDDER ? parseInt(process.env.REACT_APP_DEFAULT_BIDDER, 10) : null,
   };
 };
+
 
 /**
  * Get default headers for API requests
  * @param {boolean} includeAuth - Whether to include authentication headers
  * @param {string} token - OAuth token (if not provided, will use deprecated getEnvConfig)
  */
+
 export const getApiHeaders = (includeAuth = false, token = null) => {
   const headers = {
     'Accept': 'application/json',
@@ -133,14 +161,47 @@ export const getApiHeaders = (includeAuth = false, token = null) => {
   };
   
   if (includeAuth) {
-    const authToken = token || getEnvConfig().authToken;
+    // Use custom token if provided, otherwise fall back to getEnvConfig
+    const authToken = token || getEnvConfig().token;
+    
     if (authToken) {
       headers['freelancer-oauth-v1'] = authToken;
+      
+      // Enhanced logging for multi-account debugging
+      const tokenPreview = authToken.substring(0, 15) + '...';
+      console.log(`🔑 Using API token: ${tokenPreview}`);
+      
+      // Log source of token for debugging
+      if (token) {
+        console.log(`📤 Token source: Custom parameter (dynamic)`);
+      } else {
+        console.log(`📤 Token source: Environment config (fallback)`);
+      }
+    } else {
+      console.warn('⚠️ No access token available for API request');
+      console.warn('   - Custom token:', token ? 'PROVIDED' : 'NOT PROVIDED');
+      console.warn('   - Env config token:', getEnvConfig().token ? 'AVAILABLE' : 'MISSING');
     }
   }
   
   return headers;
 };
+
+// export const getApiHeaders = (includeAuth = false, token = null) => {
+//   const headers = {
+//     'Accept': 'application/json',
+//     'Content-Type': 'application/json',
+//   };
+  
+//   if (includeAuth) {
+//     const authToken = token || getEnvConfig().authToken;
+//     if (authToken) {
+//       headers['freelancer-oauth-v1'] = authToken;
+//     }
+//   }
+  
+//   return headers;
+// };
 
 // New: determine "new" vs "old" projects and constants
 export const NEW_THRESHOLD_SECONDS = 60;

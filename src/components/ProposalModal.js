@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { PROPOSAL_STORAGE_PREFIX } from '../utils/apiUtils';
 
 const defaultProposal = (title) =>
-  `Hello,\n\nI’m interested in working on "${title}". I have strong experience delivering high-quality web/mobile apps on time and within budget. I can start right away and keep you updated with clear milestones.\n\nLooking forward to discussing details.\n\nBest regards,\nZameer Ahmed`;
+ `Hello,\n\nI am excited to submit my proposal for "${title}".\n\nI have 7 years of experience delivering high-quality software solutions, including custom web and mobile applications for international clients. My expertise covers the full development cycle from requirements to deployment and ongoing maintenance.\n\nFor your project "${title}", I will leverage my experience to:\n- Analyze your requirements in detail\n- Communicate proactively and transparently\n- Deliver robust, scalable solutions on time and within budget\n\nI'm passionate about this domain and eager to contribute to your success. Please let me know a convenient time to chat about your specific goals!\n\nBest regards`
 
 const ProposalModal = ({
   open,

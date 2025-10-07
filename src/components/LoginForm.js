@@ -98,7 +98,7 @@ const LoginForm = ({ onSwitchToRegister }) => {
         </button>
       </form>
       
-      <p style={{ textAlign: 'center', marginTop: '1rem' }}>
+      {/* <p style={{ textAlign: 'center', marginTop: '1rem' }}>
         Don't have an account?{' '}
         <button 
           onClick={onSwitchToRegister}
@@ -112,7 +112,7 @@ const LoginForm = ({ onSwitchToRegister }) => {
         >
           Sign Up
         </button>
-      </p>
+      </p> */}
     </div>
   );
 };

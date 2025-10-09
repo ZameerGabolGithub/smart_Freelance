@@ -2,10 +2,6 @@ import React, { useState, useEffect } from 'react';
 import ErrorBoundary from './components/ErrorBoundary';
 import FetchButton from './components/FetchButton';
 import ProjectList from './components/ProjectList';
-// Remove these imports that are causing issues:
-// import AuthBanner from './components/AuthBanner';
-// import UserSwitcher from './components/UserSwitcher';
-// import AuthError from './components/AuthError';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import { useFreelancerAPI } from './hooks/useFreelancerAPI';

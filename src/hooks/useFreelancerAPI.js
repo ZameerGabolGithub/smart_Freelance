@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import axios from 'axios';
 import { API_CONFIG, buildQueryParams, STORAGE_KEYS } from '../utils/apiUtils';
 import { useAuth } from '../contexts/AuthContext';
+import { getUnixTimestamp } from '../utils/dateUtils';
 
 export const useFreelancerAPI = () => {
   const { token, currentUser } = useAuth();
@@ -34,7 +35,9 @@ export const useFreelancerAPI = () => {
       const response = await axios.get(
         `https://www.freelancer.com/ajax-api/skills/top-skills.php?limit=9999&userId=${userId}&compact=true`
       );
-      const skills = response.data?.topSkills?.map((skill) => skill.id) || [];
+      console.log(response);
+      const skills = response.data?.result?.topSkills?.map((skill) => skill.id) || [];
+      console.log(skills)
       setSkillsCache((prevCache) => ({ ...prevCache, [userId]: skills }));
       return skills;
     } catch (err) {
@@ -49,10 +52,13 @@ export const useFreelancerAPI = () => {
       return [];
     }
 
+    const from_time= getUnixTimestamp(300)
+
     try {
       const params = {
         ...API_CONFIG.DEFAULT_PARAMS,
-        jobs: skillIds,
+        'jobs[]': skillIds,
+        from_time
       };
       const queryString = buildQueryParams(params);
       const url = `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.ACTIVE_PROJECTS}?${queryString}`;

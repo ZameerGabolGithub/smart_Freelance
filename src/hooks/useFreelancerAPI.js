@@ -25,7 +25,7 @@ export const useFreelancerAPI = () => {
     }
   }, [token]);
 
-  const getUserSkills = useCallback(async (userId) => {
+  const getUserSkills = async (userId) => {
     if (skillsCache[userId]) {
       console.log(`Using cached skills for user ${userId}`);
       return skillsCache[userId];
@@ -44,7 +44,7 @@ export const useFreelancerAPI = () => {
       console.error('Error fetching user skills:', err);
       throw new Error('Failed to fetch user skills');
     }
-  }, [skillsCache]);
+  }//, [skillsCache]);
 
   const getProjectsBySkills = useCallback(async (skillIds) => {
     if (!skillIds || skillIds.length === 0) {

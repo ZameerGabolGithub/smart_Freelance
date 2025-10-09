@@ -1,8 +1,25 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { PROPOSAL_STORAGE_PREFIX } from '../utils/apiUtils';
 
-const defaultProposal = (title) =>
- `Hello,\n\nI am excited to submit my proposal for "${title}".\n\nI have 7 years of experience delivering high-quality software solutions, including custom web and mobile applications for international clients. My expertise covers the full development cycle from requirements to deployment and ongoing maintenance.\n\nFor your project "${title}", I will leverage my experience to:\n- Analyze your requirements in detail\n- Communicate proactively and transparently\n- Deliver robust, scalable solutions on time and within budget\n\nI'm passionate about this domain and eager to contribute to your success. Please let me know a convenient time to chat about your specific goals!\n\nBest regards`
+// const defaultProposal = (title) =>
+//  `Hello,\n\nI am excited to submit my proposal for "${title}".\n\nI have 7 years of experience delivering high-quality software solutions, including custom web and mobile applications for international clients. My expertise covers the full development cycle from requirements to deployment and ongoing maintenance.\n\nFor your project "${title}", I will leverage my experience to:\n- Analyze your requirements in detail\n- Communicate proactively and transparently\n- Deliver robust, scalable solutions on time and within budget\n\nI'm passionate about this domain and eager to contribute to your success. Please let me know a convenient time to chat about your specific goals!\n\nBest regards`
+
+const defaultProposal = (title) => `Hey, how are you?
+Yes, I can help you design and develop a modern, visually stunning, and fully functional platform that delivers an exceptional user experience. Whether it’s UI/UX design, full-stack web development, or CMS-based solutions, I’ll ensure everything is pixel-perfect, mobile responsive, fast-loading, and aligned with your business goals.
+I’m new to Freelancer but bring over 7+ years of professional experience working with modern technologies including PHP, Laravel, Node.js, React, Next.js, Firebase, MySQL, WordPress, Shopify, Figma. I’ve built scalable systems, high-conversion landing pages, and dynamic dashboards for both startups and enterprises.
+You can review a few of my past work:
+https://app.recruitinn.ai
+https://skillbuilder.online
+https://co-ventech.com
+https://app.co-ventech.com
+https://www.starmarketingonline.com/
+https://teamwear.design/
+https://visanetic.com/
+https://drivefds.com/
+https://gfsbuilders.com.pk/
+https://bachatt.com/
+Looking forward to creating something exceptional, user-friendly, and performance-driven for your platform.
+Thank you.\n\nBest regards,\nAhsan`
 
 const ProposalModal = ({
   open,

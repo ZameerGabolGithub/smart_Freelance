@@ -254,21 +254,26 @@ const AuthContext = createContext();
 
 
 const AVAILABLE_USERS = {
-  DEFAULT: { name: 'Default', color: 'gray' },
-  AHSAN: { name: 'Ahsan', color: 'blue' },
+  DEFAULT: { name: 'Zubair', color: 'gray' },
+  COVENTECH: { name: 'Co-Ventech', color: 'blue' },
   ZAMEER: { name: 'Zameer', color: 'green' },
+  AHSAN: { name: 'Ahsan', color: 'purple' },
+
 };
 
 const TOKENS = {
   DEFAULT: process.env.REACT_APP_DEFAULT_TOKEN,
   AHSAN: process.env.REACT_APP_TOKEN_AHSAN,
   ZAMEER: process.env.REACT_APP_TOKEN_ZAMEER,
+  COVENTECH: process.env.REACT_APP_TOKEN_COVENTECH
+
 };
 
 const BIDDERS = {
   DEFAULT: process.env.REACT_APP_DEFAULT_BIDDER,
   AHSAN: process.env.REACT_APP_BIDDER_AHSAN,
   ZAMEER: process.env.REACT_APP_BIDDER_ZAMEER,
+  COVENTECH: process.env.REACT_APP_BIDDER_COVENTECH
 };
 
 //   const login = async (email, password) => {

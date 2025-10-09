@@ -78,11 +78,11 @@ export const API_CONFIG = {
     // sort_order: 'desc',
     // 'project_types[]': 'fixed',
     // 'frontend_project_statuses[]': 'open',
-    currency: 'USD',
+    // currency: 'USD',
     // query: 'Mern Stack Development OR Mobile app Development OR Backend Development OR Frontend Development',
     // query: 'UI/UX Design OR Web development OR Mobile app development OR Full Stack Development OR AI Development',
-    min_avg_price: 500,
-    max_avg_price: 1000
+    // min_avg_price: 500,
+    // max_avg_price: 1000
   }
 };
 

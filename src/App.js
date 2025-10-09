@@ -1,202 +1,3 @@
-// import React, { useState, useEffect } from 'react';
-// import ErrorBoundary from './components/ErrorBoundary';
-// import FetchButton from './components/FetchButton';
-// import ProjectList from './components/ProjectList';
-// import AuthBanner from './components/AuthBanner';
-// import UserSwitcher from './components/UserSwitcher';
-// import AuthError from './components/AuthError';
-// import LoginForm from './components/LoginForm';
-// import RegisterForm from './components/RegisterForm';
-// import { useFreelancerAPI } from './hooks/useFreelancerAPI';
-// import { useModal } from './contexts/ModalContext';
-// import { useBidding } from './hooks/useBidding';
-// import { useAuth } from './contexts/AuthContext';
-// import ProposalModal from './components/ProposalModal';
-
-// /**
-//  * Protected App Component - Your existing functionality
-//  */
-// const MainApp = () => {
-//   const { user, logout } = useAuth();
-  
-//   // Your existing app logic stays exactly the same
-//   const {
-//     projects,
-//     loading,
-//     error,
-//     fetchRecentProjects,
-//     loadProjectsFromStorage,
-//     clearError,
-//     retryFetch,
-//     lastFetchTime,
-//     newCount,
-//     oldCount
-//   } = useFreelancerAPI();
-
-//   const { modalState, closeModal } = useModal();
-//   const { placeBid } = useBidding();
-
-//   // Load projects from storage on component mount - SAME AS BEFORE
-//   useEffect(() => {
-//     loadProjectsFromStorage();
-//   }, [loadProjectsFromStorage]);
-
-//   // Handle fetch projects - SAME AS BEFORE
-//   const handleFetchProjects = async () => {
-//     try {
-//       clearError();
-//       await fetchRecentProjects();
-//     } catch (err) {
-//       console.error('Failed to fetch projects:', err.message);
-//     }
-//   };
-
-//   // Handle retry - SAME AS BEFORE
-//   const handleRetry = async () => {
-//     try {
-//       await retryFetch();
-//     } catch (err) {
-//       console.error('Retry failed:', err.message);
-//     }
-//   };
-
-//   // Handle bid submission from modal - SAME AS BEFORE
-//   const handleSubmitBid = async ({ amount, period, description }) => {
-//     const { projectId } = modalState.data;
-//     const result = await placeBid(projectId, amount, period, description);
-    
-//     if (result?.success) {
-//       console.log('Bid response:', result.data);
-//       alert('Bid placed successfully!');
-//       closeModal();
-//     } else if (result?.message) {
-//       throw new Error(result.message);
-//     } else {
-//       throw new Error('Failed to place bid');
-//     }
-//   };
-
-//   // Your EXACT SAME JSX with just a small header change
-//   return (
-//     <div className="App">
-//       {/* New: Small header with user info and logout */}
-//       <header className="app-header" style={{ 
-//         display: 'flex', 
-//         justifyContent: 'space-between', 
-//         alignItems: 'center', 
-//         padding: '10px 20px', 
-//         background: '#f5f5f5', 
-//         borderBottom: '1px solid #ddd' 
-//       }}>
-//         <h1>🤖 Freelancer AutoBidder</h1>
-//         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-//           <span>Welcome, {user?.name || user?.email}!</span>
-//           <button 
-//             onClick={logout}
-//             style={{
-//               background: '#dc3545',
-//               color: 'white',
-//               border: 'none',
-//               padding: '5px 10px',
-//               borderRadius: '4px',
-//               cursor: 'pointer'
-//             }}
-//           >
-//             Logout
-//           </button>
-//         </div>
-//       </header>
-
-//       {/* ALL YOUR EXISTING COMPONENTS - UNCHANGED */}
-//       <AuthBanner />
-//       <UserSwitcher />
-//       <AuthError />
-      
-//       <div className="main-content">
-//         <h2>Recent Projects Dashboard</h2>
-        
-//         {/* Your existing Fetch Button */}
-//         <FetchButton
-//           onFetch={handleFetchProjects}
-//           loading={loading}
-//           error={error}
-//           onRetry={handleRetry}
-//           lastFetchTime={lastFetchTime}
-//         />
-        
-//         {/* Your existing Project List */}
-//         <ProjectList 
-//           projects={projects} 
-//           newCount={newCount} 
-//           oldCount={oldCount} 
-//         />
-//       </div>
-
-//       {/* Your existing Proposal Modal */}
-//       {modalState.isOpen && modalState.type === 'proposal' && (
-//         <ProposalModal
-//           isOpen={modalState.isOpen}
-//           onClose={closeModal}
-//           onSubmit={handleSubmitBid}
-//           projectData={modalState.data}
-//         />
-//       )}
-//     </div>
-//   );
-// };
-
-// /**
-//  * Auth Gate Component
-//  */
-// const AuthGate = () => {
-//   const [authMode, setAuthMode] = useState('login');
-  
-//   return (
-//     <div style={{ 
-//       minHeight: '100vh', 
-//       display: 'flex', 
-//       alignItems: 'center', 
-//       justifyContent: 'center',
-//       background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' 
-//     }}>
-//       {authMode === 'login' ? (
-//         <LoginForm onSwitchToRegister={() => setAuthMode('register')} />
-//       ) : (
-//         <RegisterForm onSwitchToLogin={() => setAuthMode('login')} />
-//       )}
-//     </div>
-//   );
-// };
-
-// /**
-//  * Main App with Firebase Auth Gate
-//  */
-// function App() {
-//   const { user, loading } = useAuth();
-
-//   // Show loading during auth check
-//   if (loading) {
-//     return (
-//       <div style={{ 
-//         display: 'flex', 
-//         justifyContent: 'center', 
-//         alignItems: 'center', 
-//         height: '100vh' 
-//       }}>
-//         <div>Loading...</div>
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <ErrorBoundary>
-//       {user ? <MainApp /> : <AuthGate />}
-//     </ErrorBoundary>
-//   );
-// }
-
-// export default App;
-
 import React, { useState, useEffect } from 'react';
 import ErrorBoundary from './components/ErrorBoundary';
 import FetchButton from './components/FetchButton';
@@ -213,6 +14,8 @@ import { useBidding } from './hooks/useBidding';
 import { useAuth } from './contexts/AuthContext';
 import { useFirebaseAuth } from './contexts/FirebaseAuthContext';
 import ProposalModal from './components/ProposalModal';
+
+
 
 /**
  * Protected App Component - Your existing functionality
@@ -260,6 +63,10 @@ const MainApp = () => {
     }
   };
 
+  const handleProjectsFetched = (projects) => {
+  console.log('Received projects from hardcoded fetch:', projects.length);
+
+};
   const handleSubmitBid = async ({ amount, period, description }) => {
     const { projectId } = modalState.data;
     const result = await placeBid(projectId, amount, period, description);
@@ -355,11 +162,15 @@ const MainApp = () => {
         </div>
         
         <FetchButton
-          onFetch={handleFetchProjects}
+          onFetch={fetchRecentProjects}
           loading={loading}
           error={error}
           onRetry={handleRetry}
-          lastFetchTime={lastFetchTime}
+          onUserProjectsFetched={(userKey, projects, metadata) => {
+            console.log(`Received ${projects.length} projects from ${userKey}`);
+            // Update your main project list or handle as needed
+            // setProjects(projects); // or however you want to handle it
+          }}
         />
         
         <ProjectList 

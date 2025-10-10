@@ -7,7 +7,10 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.5.2",
     "axios": "^1.6.0",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
     "firebase": "^12.3.0",
+    "openai": "^6.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -41,5 +44,18 @@
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.5"
-  }
+  },
+  "description": "A modern, responsive React.js application that integrates with the Freelancer.com API to fetch and display recent mobile app development projects. Built with Tailwind CSS for beautiful, responsive design.",
+  "main": "postcss.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZameerGabolGithub/smart_Freelance.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ZameerGabolGithub/smart_Freelance/issues"
+  },
+  "homepage": "https://github.com/ZameerGabolGithub/smart_Freelance#readme"
 }
